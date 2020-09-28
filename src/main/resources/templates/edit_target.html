@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>x新建/编辑目标</title>
+
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet"/>
+
+    <script th:src="@{/js/jquery.js}"></script>
+    <script th:src="@{/js/bootstrap.js}"></script>
+
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <h3>新建/编辑目标</h3>
+    </div>
+
+    <form class="form-row" style="display: table-cell" th:action="@{/save_target}" th:object="${target}" method="post" th:method="post">
+        <div class="form-group">
+            <label>姓名</label>
+            <input class="form-control" th:field="*{name}" required placeholder="请输入姓名">
+            <input type="hidden" th:field="*{id}">
+        </div>
+        <div class="form-group">
+            <label>身份证号</label>
+            <input class="form-control" th:field="*{idNumber}" required placeholder="请输入身份证号">
+        </div>
+        <div class="form-group">
+            <label>手机号</label>
+            <input class="form-control" th:field="*{tel}" required placeholder="请输入手机号">
+        </div>
+        <div class="form-group">
+            <label>性别</label>
+            <div th:each="sex:${sexes}">
+                <input type="radio" th:field="*{gender}" th:value="${sex}">
+                <span th:text="${sex}"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>民族</label>
+            <input class="form-control" th:field="*{nation}" required placeholder="请输入民族">
+        </div>
+        <div class="form-group">
+            <label>年龄</label>
+            <input class="form-control" th:field="*{age}" required placeholder="请输入年龄">
+        </div>
+        <div class="form-group">
+            <label>身高(cm)</label>
+            <input class="form-control" th:field="*{height}" required placeholder="请输入身高">
+        </div>
+        <div class="form-group">
+            <label>体重(kg)</label>
+            <input class="form-control" th:field="*{weight}" required placeholder="请输入体重">
+        </div>
+        <div class="form-group">
+            <label>户籍所在地</label>
+            <input class="form-control" th:field="*{idAddress}" required placeholder="请输入户籍所在地">
+        </div>
+        <div class="form-group">
+            <label>现住址</label>
+            <input class="form-control" th:field="*{address}" required placeholder="请输入现住址">
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">保存</button>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

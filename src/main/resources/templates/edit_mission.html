@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>x新建/编辑任务</title>
+
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet"/>
+
+    <script th:src="@{/js/jquery.js}"></script>
+    <script th:src="@{/js/bootstrap.js}"></script>
+
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <h3>新建/编辑任务</h3>
+    </div>
+
+    <form class="form-row" style="display: table-cell" th:action="@{/save_mission}" th:object="${mission}" method="post"
+          th:method="post">
+        <div class="form-group">
+            <label>名称</label>
+            <input class="form-control" th:field="*{name}" required placeholder="请输入任务名称">
+            <input type="hidden" th:field="*{id}">
+        </div>
+        <div class="form-group">
+            <label>任务类型</label>
+            <div th:each="t:${types}">
+                <input type="radio" th:field="*{type}" th:value="${t}">
+                <label th:text="${t}"></label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>开始时间</label>
+            <input type="datetime-local" class="form-control" th:field="*{startTime}">
+        </div>
+        <div class="form-group">
+            <label>结束时间</label>
+            <input type="datetime-local" class="form-control" th:field="*{endTime}">
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">保存</button>
+        </div>
+
+    </form>
+
+</div>
+
+</body>
+</html>

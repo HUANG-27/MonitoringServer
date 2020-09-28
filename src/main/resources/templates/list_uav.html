@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>设备管理</title>
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <h3>辅助设备管理</h3>
+    </div>
+    <div class="row">
+        <div class="col col-10">
+            <form class="form-row" id="uav_form" th:action="@{/list_uav}" method="post">
+                <div class="form-group">
+                    <label>
+                        <input type="text" placeholder="请输入关键字进行搜索"
+                               name="keyword" th:value="${keyword}">
+                    </label>
+                    <input type="submit" class="btn btn-primary" value="搜索">
+                </div>
+            </form>
+        </div>
+        <div class="col col-2">
+            <a th:href="@{/add_uav}" class="btn btn-success">添加</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <table class="table"  style="text-align: center">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>代号</th>
+                <th>机型</th>
+                <th>任务</th>
+                <th>状态</th>
+                <th>管理</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="u,uStat:${pages.content}">
+                <td th:text="${uStat.count}"></td>
+                <td th:text="${u.name}"></td>
+                <td th:text="${u.model}"></td>
+                <td th:text="${u.mission}?${u.mission.name}"></td>
+                <td th:text="${u.active}"></td>
+                <td>
+                    <a th:href="@{|/edit_uav/${u.id}|}" class="btn btn-primary">编辑</a>
+                    <a th:href="@{|/delete_uav/${u.id}|}" class="delbtn btn btn-danger">删除</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="row" th:fragment="pager">
+        <nav>
+            <!--分页需要的数据：1数据查询结果用pages作为关键字且是分页查询；2当权网址必须是查询页面；3条件查询-->
+            <ul class="pagination">
+                <li th:each="p:${#numbers.sequence(1,pages.totalPages)}">
+                    <!--th:href="'?page='+${p-1}+'&size=1'"-->
+                    <a href="javascript:void(0);" th:page="${p-1}" class="page-link page-link-ctm" th:text="${p}"></a>
+                </li>
+            </ul>
+        </nav>
+
+        <script type="text/javascript">
+            $(".page-link-ctm").click(function () {
+                //表单提交
+                var f = $("#uav_form");
+                var p = $("<input type='hidden' name='page'>");
+                $(p).val($(this).attr("page"));
+                var s = $("<input type='hidden' name='size' value='1'>");
+                $(p).appendTo(f);
+                $(s).appendTo(f);
+                $(f).submit();
+                return false;
+            });
+        </script>
+    </div>
+
+</div>
+
+</body>
+</html>

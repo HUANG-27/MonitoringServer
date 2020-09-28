@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>浏览任务</title>
+
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet"/>
+
+    <script th:src="@{/js/jquery.js}"></script>
+    <script th:src="@{/js/bootstrap.js}"></script>
+
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <h3>浏览任务</h3>
+    </div>
+
+    <form class="form-row" style="display: table-cell" th:action="@{/info_mission}" th:object="${mission}" method="post"
+          th:method="post">
+        <div class="form-group">
+            <div class="form-group">
+                <label>名称</label>
+                <input class="form-control" th:value="*{name}">
+            </div>
+            <div class="form-group">
+                <label>任务类型</label>
+                <input class="form-control" th:value="*{type}">
+            </div>
+            <div class="form-group">
+                <label>开始时间</label>
+                <input type="datetime-local" class="form-control" th:field="*{startTime}">
+            </div>
+            <div class="form-group">
+                <label>结束时间</label>
+                <input type="datetime-local" class="form-control" th:field="*{endTime}">
+            </div>
+            <a th:href="@{|/edit_mission/${mission.id}|}">编辑基本信息</a>
+        </div>
+
+        <div class="form-group">
+            <label>目标</label>
+            <div th:each="target:*{targets}">
+                <label th:text="${target.name}"></label>
+            </div>
+            <a th:href="@{|/check_target/${mission.id}|}">设置目标</a>
+        </div>
+        <div class="form-group">
+            <label>警务人员</label>
+            <div th:each="monitor:*{monitors}">
+                <label th:text="${monitor.name}"></label>
+            </div>
+            <a th:href="@{|/check_monitor/${mission.id}|}">分配警力</a>
+        </div>
+        <div class="form-group">
+            <label>辅助设备</label>
+            <div th:each="uav:*{uavs}">
+                <label th:text="${uav.name}"></label>
+            </div>
+            <a th:href="@{|/check_uav/${mission.id}|}">分配设备</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

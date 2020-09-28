@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>ArcGIS API for JavaScript Hello World App</title>
+    <style>
+        html, body, #viewDiv {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://js.arcgis.com/4.15/esri/css/main.css">
+    <script src="https://js.arcgis.com/4.15/"></script>
+
+    <script>
+        require([
+            "esri/Map",
+            "esri/views/MapView",
+            "esri/widgets/BasemapToggle",
+            "esri/widgets/BasemapGallery"
+        ], function(Map, MapView, BasemapToggle, BasemapGallery) {
+
+            var map = new Map({
+                basemap: "streets-navigation-vector"
+            });
+
+            var view = new MapView({
+                container: "viewDiv",
+                map: map,
+                center: [116.3972,39.9096],
+                zoom: 15
+            });
+
+            var basemapToggle = new BasemapToggle({
+                view: view,
+                nextBasemap: "satellite"
+            });
+
+            var basemapGallery = new BasemapGallery({
+                view: view,
+                source: {
+                    portal: {
+                        url: "https://www.arcgis.com",
+                        useVectorBasemaps: true // Load vector tile basemaps
+                    }
+                }
+            });
+
+            view.ui.add(basemapGallery, "top-right");
+
+            view.ui.add(basemapToggle, "bottom-right");
+        });
+    </script>
+
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <h3>指挥系统</h3>
+    </div>
+    <div class="row">
+        <div id="viewDiv" style="height: 500px"></div>
+    </div>
+</div>
+
+</body>
+</html>

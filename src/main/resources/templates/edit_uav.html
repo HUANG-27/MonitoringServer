@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>x新建/编辑设备</title>
+
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet"/>
+
+    <script th:src="@{/js/jquery.js}"></script>
+    <script th:src="@{/js/bootstrap.js}"></script>
+
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <h3>新建/编辑设备</h3>
+    </div>
+
+    <form class="form-row" style="display: table-cell" th:action="@{/save_uav}" th:object="${uav}" method="post" th:method="post">
+        <div class="form-group">
+            <label>代号</label>
+            <input class="form-control" th:field="*{name}" required placeholder="请输入代号">
+            <input type="hidden" th:field="*{id}">
+        </div>
+        <div class="form-group">
+            <label>型号</label>
+            <input class="form-control" th:field="*{model}" required placeholder="请输入设备型号">
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">保存</button>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
