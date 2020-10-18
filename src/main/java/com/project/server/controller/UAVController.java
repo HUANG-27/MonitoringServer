@@ -20,8 +20,8 @@ public class UAVController {
     @Autowired
     private UAVRepository uavRepository;
 
-    @RequestMapping("/uav/list")
-    public String list(){
+    @GetMapping("/uav/list")
+    public @ResponseBody String list(){
         List<UAV> uavList = uavRepository.findAll();
         return JSONArray.toJSONString(uavList);
     }

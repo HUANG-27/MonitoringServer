@@ -22,25 +22,28 @@ public class TargetController {
     @Autowired
     private TargetRepository targetRepository;
 
+    @PostMapping("/target/get")
+    public @ResponseBody String get(@RequestParam(name = "id") Integer id) {
+        return JSONObject.toJSONString(targetRepository.findById(id).get());
+    }
+
     @PostMapping("/target/save")
-    public String save(@RequestParam(name = "target") String targetStr){
-        Target target = JSONObject.parseObject(targetStr, Target.class);
+    public @ResponseBody String save(@RequestBody Target target){
         targetRepository.save(target);
         return JSONObject.toJSONString(target);
     }
 
     @PostMapping("/target/edit")
-    public String edit(@RequestParam(name = "target") String targetStr){
+    public @ResponseBody String edit(@RequestParam(name = "target") String targetStr){
         Target target = JSONObject.parseObject(targetStr, Target.class);
         targetRepository.save(target);
         return JSONObject.toJSONString(target);
     }
 
     @GetMapping("/target/list")
-    public String list(){
+    public @ResponseBody String list(){
         return JSONArray.toJSONString(targetRepository.findAll());
     }
-
 
     @RequestMapping("/list_target")
     public String list(String keyword, Model model, Pageable pageable) {

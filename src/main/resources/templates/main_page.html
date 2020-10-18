@@ -21,8 +21,8 @@
             "esri/Map",
             "esri/views/MapView",
             "esri/widgets/BasemapToggle",
-            "esri/widgets/BasemapGallery"
-        ], function(Map, MapView, BasemapToggle, BasemapGallery) {
+            "esri/layers/FeatureLayer"
+        ], function(Map, MapView, BasemapToggle, FeatureLayer) {
 
             var map = new Map({
                 basemap: "streets-navigation-vector"
@@ -40,19 +40,43 @@
                 nextBasemap: "satellite"
             });
 
-            var basemapGallery = new BasemapGallery({
-                view: view,
-                source: {
-                    portal: {
-                        url: "https://www.arcgis.com",
-                        useVectorBasemaps: true // Load vector tile basemaps
-                    }
+            view.ui.add(basemapToggle, "bottom-right");
+
+            var trailheadsRenderer = {
+                type: "simple",
+                symbol: {
+                    type: "picture-marker",
+                    url: "http://static.arcgis.com/images/Symbols/NPS/npsPictograph_0231b.png",
+                    width: "18px",
+                    height: "18px"
                 }
+            };
+            var trailheadsLabels = {
+                symbol: {
+                    type: "text",
+                    color: "#FFFFFF",
+                    haloColor: "#5E8D74",
+                    haloSize: "2px",
+                    font: {
+                        size: "12px",
+                        family: "Noto Sans",
+                        style: "italic",
+                        weight: "normal"
+                    }
+                },
+                labelPlacement: "above-center",
+                labelExpressionInfo: {
+                    expression: "$feature.TRL_NAME"
+                }
+            };
+            var trailheads = new FeatureLayer({
+                url:
+                    "https://services3.arcgis.com/GVgbJbqm8hXASVYi/arcgis/rest/services/Trailheads/FeatureServer/0",
+                renderer: trailheadsRenderer,
+                labelingInfo: [trailheadsLabels]
             });
 
-            view.ui.add(basemapGallery, "top-right");
-
-            view.ui.add(basemapToggle, "bottom-right");
+            map.add(trailheads)
         });
     </script>
 

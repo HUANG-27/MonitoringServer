@@ -1,6 +1,5 @@
 package com.project.server.repository;
 
-import com.project.server.entity.Monitor;
 import com.project.server.entity.Target;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

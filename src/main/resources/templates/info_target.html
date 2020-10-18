@@ -36,7 +36,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="d,dStat:${target.datas}">
+        <tr th:each="d,dStat:${target.dataList}">
             <td th:text="${dStat.count}"></td>
             <td th:text="${d.type}"></td>
             <td th:text="${d.monitor}?${d.monitor.name}"></td>

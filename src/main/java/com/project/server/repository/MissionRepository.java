@@ -2,7 +2,6 @@ package com.project.server.repository;
 
 import com.project.server.entity.Mission;
 import com.project.server.entity.MissionType;
-import com.project.server.entity.Monitor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

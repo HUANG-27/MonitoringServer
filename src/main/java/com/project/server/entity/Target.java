@@ -33,7 +33,7 @@ public class Target implements Serializable {
     private Coordinate location;
 
     @OneToMany(mappedBy = "target")
-    private List<Data2> datas;
+    private List<Data> dataList;
 
     private String description;
     private String tag;
@@ -153,12 +153,12 @@ public class Target implements Serializable {
         this.location = location;
     }
 
-    public List<Data2> getDatas() {
-        return datas;
+    public List<Data> getDataList() {
+        return dataList;
     }
 
-    public void setDatas(List<Data2> datas) {
-        this.datas = datas;
+    public void setDataList(List<Data> dataList) {
+        this.dataList = dataList;
     }
 
     public String getDescription() {

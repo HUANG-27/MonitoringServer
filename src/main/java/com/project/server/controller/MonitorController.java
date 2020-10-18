@@ -1,6 +1,5 @@
 package com.project.server.controller;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.project.server.entity.Monitor;
 import com.project.server.entity.Coordinate;
@@ -17,15 +16,14 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @Controller
 public class MonitorController {
     @Autowired
     private MonitorRepository monitorRepository;
 
-    @PostMapping("/register")
-    public String register(@RequestBody Monitor monitor) {
+    @PostMapping("/monitor/register")
+    public @ResponseBody String register(@RequestBody Monitor monitor) {
         try {
             monitor.setState(true);
             monitorRepository.save(monitor);
@@ -36,10 +34,10 @@ public class MonitorController {
 
     }
 
-    @PostMapping("/login")
-    public String login(@RequestParam(name = "idNumber") String idNumber,
+    @PostMapping("/monitor/login")
+    public @ResponseBody String login(@RequestParam(name = "phone_number") String phoneNumber,
                         @RequestParam(name = "password") String password) {
-        Monitor monitor = monitorRepository.findByIdNumber(idNumber).get(0);
+        Monitor monitor = monitorRepository.findByTel(phoneNumber).get(0);
         if (password.equals(monitor.getPassword())) {
             monitor.setState(true);
             monitorRepository.save(monitor);
@@ -48,31 +46,32 @@ public class MonitorController {
         return null;
     }
 
-    @PostMapping("/logout")
-    public String logout(@RequestParam(name = "id") Integer id) {
+    @PostMapping("/monitor/logout")
+    public @ResponseBody String logout(@RequestParam(name = "id") Integer id) {
         Monitor monitor = monitorRepository.findById(id).get();
         monitor.setState(false);
         monitorRepository.save(monitor);
-        return String.valueOf(!monitor.getState());
+        boolean res = !monitor.getState();
+        return String.valueOf(res);
     }
 
-    @PostMapping("/update-location")
-    public void updateLocation(@RequestParam(name = "id") Integer id,
+    @PostMapping("/monitor/update_loc")
+    public @ResponseBody String updateLocation(@RequestParam(name = "id") Integer id,
                                @RequestParam(name = "location") String locationStr) {
-        Optional<Monitor> monitorOptional = monitorRepository.findById(id);
-        Monitor monitor = monitorOptional.get();
+        Monitor monitor = monitorRepository.findById(id).get();
         monitor.setLocation(JSONObject.parseObject(locationStr, Coordinate.class));
         monitorRepository.save(monitor);
+        return "bingo";
     }
 
     @PostMapping("/edit")
-    public String edit(@RequestBody Monitor monitor) {
+    public @ResponseBody String edit(@RequestBody Monitor monitor) {
         monitorRepository.save(monitor);
         return JSONObject.toJSONString(monitor);
     }
 
     @PostMapping("/get")
-    public String get(@RequestParam(name = "id") Integer id) {
+    public @ResponseBody String get(@RequestParam(name = "id") Integer id) {
         return JSONObject.toJSONString(monitorRepository.findById(id).get());
     }
 

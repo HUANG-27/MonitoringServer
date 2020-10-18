@@ -28,9 +28,6 @@ public class Monitor implements Serializable {
     private String password;
     private String gender;
     private String nation;
-
-    @Convert(converter = CoordinateConverter.class)
-    private List<Coordinate> path;
     @ManyToOne
     private Mission mission;
     private Boolean state;
@@ -38,6 +35,10 @@ public class Monitor implements Serializable {
     private String officeDuty;
     @Convert(converter = CoordinateConverter.class)
     private Coordinate location;
+
+    @Convert(converter = CoordinateConverter.class)
+    private List<Coordinate> path;
+
     private String tag;
 
     public Monitor() {

@@ -5,13 +5,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.project.server.entity.UAVData;
 import com.project.server.repository.UAVDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 public class UAVDataController {
     @Autowired
     private UAVDataRepository uavDataRepository;
@@ -22,8 +21,8 @@ public class UAVDataController {
         uavDataRepository.save(uavData);
     }
 
-    @RequestMapping("/uavdata/list")
-    public String list(){
+    @RequestMapping(value = "/uavdata/list", method = RequestMethod.POST)
+    public @ResponseBody String list(){
         List<UAVData> uavDataList = uavDataRepository.findAll();
         return JSONArray.toJSONString(uavDataList);
     }

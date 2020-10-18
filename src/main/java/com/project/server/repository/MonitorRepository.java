@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface MonitorRepository extends JpaRepository<Monitor, Integer> {
-    public List<Monitor> findByIdNumber(String idNumber);
+    public List<Monitor> findByTel(String phoneNumber);
 
     @Query("select m from Monitor m where m.name like ?1")
     public Page<Monitor> findByKeyword(String keyword, Pageable pageable);
